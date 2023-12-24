@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Searchable Dropdown</title>
+        <style>
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-select {
+                width: 200px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                outline: none;
+            }
+
+            .dropdown-options {
+                display: none;
+                position: absolute;
+                width: 100%;
+                border: 1px solid #ccc;
+                border-top: none;
+                border-radius: 0 0 4px 4px;
+                box-sizing: border-box;
+                z-index: 1;
+            }
+
+            .dropdown-options.active {
+                display: block;
+            }
+
+            .dropdown-option {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            .dropdown-option:hover {
+                background-color: #f0f0f0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dropdown" id="myDropdown">
+            <input
+                type="text"
+                class="dropdown-select"
+                placeholder="Select an option"
+            />
+            <div class="dropdown-options" id="options">
+                <div class="dropdown-option">Option 1</div>
+                <div class="dropdown-option">Option 2</div>
+                <div class="dropdown-option">Option 3</div>
+                <div class="dropdown-option">Option 4</div>
+                <!-- Add more options as needed -->
+            </div>
+        </div>
+
+        <script>
+            var dropdown = document.getElementById("myDropdown");
+            var selectInput = dropdown.querySelector(".dropdown-select");
+            var optionsList = dropdown.querySelector(".dropdown-options");
+
+            selectInput.addEventListener("click", function () {
+                optionsList.classList.toggle("active");
+            });
+
+            optionsList.addEventListener("click", function (e) {
+                var target = e.target;
+                if (target.classList.contains("dropdown-option")) {
+                    selectInput.value = target.textContent;
+                    optionsList.classList.remove("active");
+                }
+            });
+
+            document.addEventListener("click", function (e) {
+                if (!dropdown.contains(e.target)) {
+                    optionsList.classList.remove("active");
+                }
+            });
+        </script>
+    </body>
+</html>
