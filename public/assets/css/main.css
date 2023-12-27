@@ -2939,3 +2939,110 @@ section {
     cursor: pointer;
     background-color: var(--primary-color);
 }
+
+.pilihan {
+    margin-top: 87px;
+}
+
+.parent-container {
+    height: 100vh; /* Set the height of the parent container to 100% of the viewport height */
+}
+
+.box-pilihan {
+    height: 100%; /* Set the height of the flex container to 100% */
+    /* Add any other styling for the flex container as needed */
+    display: flex;
+    justify-content: space-around; /* Adjust as needed */
+    align-items: center; /* Adjust as needed */
+    border: 2px solid var(--primary-color);
+    cursor: pointer;
+    background-color: white;
+}
+
+.box-custome{
+    background-color: #f4f4f4;
+}
+
+.headerdetail{
+    border-radius: 0px 0px 20px 20px;
+    background: linear-gradient(90deg, #9E1919 0%, #244769 100%);   
+}
+
+.headerfoto img{
+    width: 90%;
+}
+
+/* Example styles for the flex items */
+.ringkasan, .dataset, .infografi {
+    flex: 1; /* Distribute available space evenly among flex items */
+    text-align: center; /* Center the text */
+    /* Add any other styling for the flex items as needed */
+}
+
+.box-pilihan .item.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#stuntingByKecamatan{
+    overflow: visible;
+}
+
+.data-detail{
+    margin-top: 95px;
+}
+
+.header-detail{
+    background-color: var(--primary-color);
+}
+
+
+.dataTables_paginate.paging_simple_numbers span {
+  color: black;
+}
+
+.dataTables_paginate.paging_simple_numbers .paginate_button.current {
+  background-color: var(--color-secondary);
+  /* Warna latar belakang */
+  color: white !important;
+  /* Warna teks */
+  border: 1px solid var(--color-secondary);
+  /* Gaya border */
+  border-radius: 5px;
+  /* Tambahkan border-radius untuk membuat tombol lebih bulat */
+}
+
+.ketegoridata-tabel{
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dataTables_paginate.paging_simple_numbers .paginate_button.current:hover {
+  background-color: var(--color-primary);
+  color: white !important;
+}
+
+.dataTables_paginate.paging_simple_numbers .paginate_button {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.dataTables_paginate.paging_simple_numbers span a.paginate_button:hover {
+  background-color: var(--color-primary) !important;
+}
+
+
+    @media screen and (max-width: 550px) {
+        .peta {
+            width: 100%;
+            height: 520px;
+        }
+    }
+
+    /*untuk layar device berukuran besar*/
+    @media screen and (min-width: 800px) {
+        .peta {
+            width: 100%;
+            height: 650px;
+        }
+    }

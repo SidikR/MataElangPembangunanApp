@@ -1,7 +1,17 @@
-@extends('layouts.detail')
-@section('content')
-    @include('pages.dinkes.stunting.partials.tabelData')
-    <div id="map" class="peta"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+    <!-- Include Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" class="peta" style="height: 500px;"></div>
+
     <script>
         var peta1 = L.tileLayer(
             'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -18,7 +28,6 @@
                     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 id: 'mapbox/satellite-v9'
             });
-
 
         var peta3 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -40,36 +49,24 @@
 
         var baseLayers = {
             'Default': peta1,
-            'Satelite': peta2,
+            'Satellite': peta2,
             'Street': peta3,
-            'Dark': peta4,
-
+            'Dark': peta4
         };
-        var layerControl = L.control.layers(baseLayers).addTo(map);
 
+        L.control.layers(baseLayers).addTo(map);
 
         L.marker([-5.7127694975182495, 105.58705019161188])
-            .bindPopup("<b>tes</b><br>" +
-                "Petugas: Andre<br><br>" +
-                "<div class='text-center'>" +
-                "<a class='btn btn-xs btn-success'"
-            )
+            .bindPopup("<b>tes</b><br>Petugas: Andre")
             .addTo(map);
 
-
         L.easyPrint({
-            title: 'My awesome image button',
+            title: 'Print Map',
             position: 'topleft',
             exportOnly: true,
             filename: 'JasaRaharja',
             sizeModes: ['Current', 'A4Portrait', 'A4Landscape']
         }).addTo(map);
-
-        L.easyPrint({
-            title: 'My awesome print button',
-            position: 'topleft',
-            filename: 'JasaRaharja',
-            sizeModes: ['Current', 'A4Portrait', 'A4Landscape']
-        }).addTo(map);
     </script>
-@endsection
+</body>
+</html>
