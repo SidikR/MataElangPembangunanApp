@@ -95,6 +95,7 @@
             </form>
         </div>
 
+
         <div class="row mt-4" v-if="isActiveDataSet">
             <table id="stuntingTable" class="table table-striped mb-5" style="width:100%">
                 <thead>
@@ -175,6 +176,8 @@
 
         </div>
 
+        <div id="map" class="peta"></div>
+
         <div class="info-grafis" v-if="isActiveInfoGrafis">
             <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Kecamatan</h2>
             <canvas ref="kecamatanChartCanvas" id="kecamatanChart" width="300" height="100"
@@ -185,82 +188,6 @@
         </div>
 
     </div>
-    <div id="map" class="peta"></div>
-
-    <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{-- <script src="http://127.0.0.1:8000/assets/vendor/leaflet-easyprint/dist/bundle.js"></script> --}}
-    <script>
-        var peta1 = L.tileLayer(
-            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox/streets-v11'
-            });
-
-        var peta2 = L.tileLayer(
-            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox/satellite-v9'
-            });
-
-
-        var peta3 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
-
-        var peta4 = L.tileLayer(
-            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox/dark-v10'
-            });
-
-        var map = L.map('map', {
-            center: [-5.374517805784923, 105.22335858085205],
-            zoom: 10,
-            layers: [peta3]
-        });
-
-        var baseLayers = {
-            'Default': peta1,
-            'Satelite': peta2,
-            'Street': peta3,
-            'Dark': peta4,
-
-        };
-        var layerControl = L.control.layers(baseLayers).addTo(map);
-
-
-        L.marker([-5.7127694975182495, 105.58705019161188])
-            .bindPopup("<b>tes</b><br>" +
-                "Petugas: Andre<br><br>" +
-                "<div class='text-center'>" +
-                "<a class='btn btn-xs btn-success'"
-            )
-            .addTo(map);
-
-
-        L.easyPrint({
-            title: 'My awesome image button',
-            position: 'topleft',
-            exportOnly: true,
-            filename: 'JasaRaharja',
-            sizeModes: ['Current', 'A4Portrait', 'A4Landscape']
-        }).addTo(map);
-
-        L.easyPrint({
-            title: 'My awesome print button',
-            position: 'topleft',
-            filename: 'JasaRaharja',
-            sizeModes: ['Current', 'A4Portrait', 'A4Landscape']
-        }).addTo(map);
-    </script>
-
     <script>
         const app = Vue.createApp({
             data() {
@@ -275,6 +202,7 @@
                     isActiveRingkasan: true,
                     isActiveDataSet: false,
                     isActiveInfoGrafis: false,
+                    map: null,
                 };
             },
 
@@ -325,6 +253,13 @@
                 },
             },
 
+            watch: {
+                dataStuntingView: {
+                    deep: true, // Membuat pemantauan menjadi rekursif untuk objek bersarang
+                    handler: 'handleMaps', // Panggil handleMaps ketika dataStuntingView berubah
+                },
+            },
+
             methods: {
                 handleKecamatan(id) {
                     const kecamatan = this.kecamatanData.find(
@@ -333,13 +268,67 @@
                     return kecamatan ? kecamatan.name : 'Unknown Kecamatan';
                 },
 
+                handleMaps() {
+                    const baseLayers = {
+                        'Map 1': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }),
+                    };
+
+                    var peta3 = baseLayers['Map 1'];
+
+                    // Hapus peta sebelumnya jika ada
+                    if (this.map) {
+                        this.map.remove();
+                    }
+
+                    this.map = L.map('map', {
+                        center: [-5.7127694975182495, 105.58705019161188],
+                        zoom: 10,
+                        layers: [baseLayers['Map 1']],
+                    });
+
+                    // L.control.layers(baseLayers).addTo(this.map);
+
+                    this.map.addControl(new L.Control.Fullscreen());
+
+
+                    const geoJSONUrl = '{{ asset('assets/geo-location/lampung-selatan.geojson') }}';
+                    fetch(geoJSONUrl)
+                        .then(response => response.json())
+                        .then(geoJSONData => {
+                            L.geoJSON(geoJSONData).addTo(this.map);
+                        })
+                        .catch(error => {
+                            console.error('Error loading GeoJSON data:', error);
+                        });
+
+                    const markers = this.dataStuntingView.map(location => {
+                        const [lat, lng] = location.koordinat.split(',').map(parseFloat);
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                            return L.marker([lat, lng])
+                                .bindPopup(`    <div class = "d-flex flex-column gap-2">
+                                                <img class="bg-success border-1 rounded-2" src="${location.photoUrl}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
+                                                <span>Nama : <b>${location.Name}</b></span>
+                                                <button class="btn btn-success" onclick="handleButtonClick()">Button 1</button>
+                                            </div>
+                                        `)
+                                .addTo(this.map);
+                        } else {
+                            console.error(`Invalid coordinates for ${location.Name}`);
+                            return null;
+                        }
+                    });
+
+                },
+
                 async fetchKecamatanData() {
                     try {
                         const response = await axios.get(
                             'https://api.binderbyte.com/wilayah/kecamatan?api_key=26dc325e8104c47591ce093a2c050b92689a871f9b71c2ab496968f487343111&id_kabupaten=18.01'
                         );
+
                         this.kecamatanData = response.data.value;
-                        console.log(this.kecamatanData);
                     } catch (error) {
                         console.error('Error fetching kecamatan data:', error);
                     }
@@ -364,6 +353,7 @@
                         this.dataStunting = response.data;
                         this.dataStuntingView = this.dataStunting;
                         this.updateDataTable();
+                        this.handleMaps();
                     } catch (error) {
                         console.error('Error fetching data:', error);
                     }
@@ -371,7 +361,7 @@
 
                 handleFilterKecamatan(event) {
                     this.selectedKecamatan = event.target.value;
-                    this.fetchDataDesa(); // Fetch data desa when kecamatan changes
+                    this.fetchDataDesa();
                     this.dataStuntingView = this.dataStunting;
                     const filteredData = this.selectedKecamatan === '' ?
                         this.dataStuntingView :
@@ -392,17 +382,11 @@
 
                 updateDataTable() {
                     const stuntingTable = $('#stuntingTable').DataTable();
-                    // const stuntingTableByKecamatan = $('#stuntingByKecamatan').DataTable();
-                    // const stuntingTableByDesa = $('#stuntingByDesa').DataTable();
+
                     if (stuntingTable) {
                         stuntingTable.destroy();
                     }
-                    // if (stuntingTableByKecamatan) {
-                    //     stuntingTableByKecamatan.destroy();
-                    // }
-                    // if (stuntingTableByDesa) {
-                    //     stuntingTableByDesa.destroy();
-                    // }
+
                     this.$nextTick(() => {
                         $('#stuntingTable').DataTable({
                             colReorder: true,
@@ -413,27 +397,7 @@
                             ],
                             scrollX: true,
                         });
-                        // $('#stuntingByKecamatan').DataTable({
-                        //     colReorder: true,
-                        //     responsive: true,
-                        //     lengthMenu: [
-                        //         [10, 25, 50, -1],
-                        //         [10, 25, 50, 'All'],
-                        //     ],
-                        //     scrollX: true,
-                        // });
-                        // $('#stuntingByDesa').DataTable({
-                        //     colReorder: true,
-                        //     responsive: true,
-                        //     lengthMenu: [
-                        //         [10, 25, 50, -1],
-                        //         [10, 25, 50, 'All'],
-                        //     ],
-                        //     scrollX: true,
-                        // });
-                        // this.createKecamatanChart();
-                        this.createKecamatanChart();
-                        this.createDesaChart();
+                        this.startChart();
                     });
 
                 },
@@ -445,20 +409,18 @@
 
                 createKecamatanChart() {
                     if (this.isActiveInfoGrafis) {
-                        const kecamatanChartCanvas = this.$refs.kecamatanChartCanvas.getContext('2d');
-                        const existingChart = Chart.getChart(kecamatanChartCanvas);
+                        const kecamatanChartCanvass = this.$refs.kecamatanChartCanvas.getContext('2d');
+                        const existingChart = Chart.getChart(kecamatanChartCanvass);
 
-                        // Destroy the existing chart if it exists
                         if (existingChart) {
                             existingChart.destroy();
                         }
 
                         const getRandomColor = () => {
-                            // Generate a random hex color code
                             return '#' + Math.floor(Math.random() * 16777215).toString(16);
                         };
 
-                        const kecamatanChart = new Chart(kecamatanChartCanvas, {
+                        const kecamatanChart = new Chart(kecamatanChartCanvass, {
                             type: 'bar',
                             data: {
                                 labels: this.kecamatanData.map(kecamatan => kecamatan.name),
@@ -467,7 +429,6 @@
                                     data: this.kecamatanData.map(kecamatan => this.kecamatanSummary[
                                         kecamatan.id] || 0),
                                     backgroundColor: this.kecamatanData.map(() => getRandomColor()),
-                                    // borderColor: this.kecamatanData.map(() => getRandomColor()),
                                     borderWidth: 1
                                 }]
                             },
@@ -487,13 +448,11 @@
                         const desaChartCanvas = this.$refs.desaChartCanvas.getContext('2d');
                         const existingChart = Chart.getChart(desaChartCanvas);
 
-                        // Destroy the existing chart if it exists
                         if (existingChart) {
                             existingChart.destroy();
                         }
 
                         const getRandomColor = () => {
-                            // Generate a random hex color code
                             return '#' + Math.floor(Math.random() * 16777215).toString(16);
                         };
 
@@ -505,7 +464,7 @@
                                     label: 'Jumlah Stunting',
                                     data: this.dataDesa.map(desa => this.desaSummary[desa.id] || 0),
                                     backgroundColor: this.dataDesa.map(() =>
-                                        getRandomColor()), // Use this.dataDesa consistently
+                                        getRandomColor()),
                                     borderWidth: 1
                                 }]
                             },
@@ -518,10 +477,7 @@
                             }
                         });
                     }
-
-
                 },
-
 
                 buttonReset() {
                     this.dataStuntingView = this.dataStunting;
@@ -533,25 +489,20 @@
                     this.isActiveDataSet = false;
                     this.isActiveInfoGrafis = false;
                     this.updateDataTable();
-                    this.createKecamatanChart();
-                    this.createDesaChart();
                 },
+
                 activeDataSet() {
                     this.isActiveRingkasan = false;
                     this.isActiveDataSet = true;
                     this.isActiveInfoGrafis = false;
                     this.updateDataTable();
-                    this.createKecamatanChart();
-                    this.createDesaChart();
                 },
+
                 activeInfoGrafis() {
                     this.isActiveRingkasan = false;
                     this.isActiveDataSet = false;
                     this.isActiveInfoGrafis = true;
                     this.updateDataTable();
-                    this.createKecamatanChart();
-                    this.createDesaChart();
-
                 },
             }
         });
