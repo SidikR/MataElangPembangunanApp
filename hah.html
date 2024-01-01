@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin=""
+        />
+        <style>
+            #map {
+                height: 800px;
+                width: 1000px;
+            }
+        </style>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script
+            src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet-fullscreen/dist/leaflet.fullscreen.css"
+        />
+        <script src="https://unpkg.com/leaflet-fullscreen/dist/Leaflet.fullscreen.min.js"></script>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            var peta1 = L.tileLayer(
+                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
+                {
+                    attribution:
+                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: "mapbox/streets-v11",
+                }
+            );
+
+            var peta2 = L.tileLayer(
+                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
+                {
+                    attribution:
+                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: "mapbox/satellite-v9",
+                }
+            );
+
+            var peta3 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    attribution:
+                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                }
+            );
+
+            var peta4 = L.tileLayer(
+                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
+                {
+                    attribution:
+                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: "mapbox/dark-v10",
+                }
+            );
+
+            var map = L.map("map", {
+                center: [-5.374517805784923, 105.22335858085205],
+                zoom: 10,
+                layers: [peta3],
+            });
+
+            var baseLayers = {
+                Default: peta1,
+                Satelite: peta2,
+                Street: peta3,
+                Dark: peta4,
+            };
+
+            var layerControl = L.control.layers(baseLayers).addTo(map);
+
+            L.control
+                .fullscreen({
+                    position: "topright",
+                    title: "Fullscreen",
+                    titleCancel: "Exit Fullscreen",
+                    forceSeparateButton: true,
+                })
+                .addTo(map);
+
+            var sidebar = L.control
+                .sidebar("sidebar", { position: "left" })
+                .addTo(map);
+
+            L.control.locate().addTo(map);
+
+            var baseLayers = {
+                Mapbox: mapbox,
+                OpenStreetMap: osm,
+            };
+
+            var overlays = {
+                Marker: marker,
+                Roads: roadsLayer,
+            };
+
+            L.control.layers(baseLayers, overlays).addTo(map);
+
+            L.control.mousePosition().addTo(map);
+
+            L.marker([-5.7127694975182495, 105.58705019161188])
+                .bindPopup(
+                    "<b>tes</b><br>" +
+                        "Petugas: Andre<br><br>" +
+                        "<div class='text-center'>" +
+                        "<a class='btn btn-xs btn-success'" +
+                        "href='<?= base_url('lokasi/detail/' . 1); ?>'><i class='fa fa-search-plus'></i></a>   " +
+                        "<a class='btn btn-xs btn-warning'" +
+                        "href='<?= base_url('lokasi/edit/' . 1); ?>'><i class='fa fa-edit'></i></a>   " +
+                        "<a onclick='return confirm()' class='btn btn-xs btn-danger'" +
+                        "href='<?= base_url('lokasi/delete/' . 1); ?>'><i class='fa fa-trash'></i></a>" +
+                        "</div>"
+                )
+                .addTo(map);
+
+            L.marker([-5.7127694975182495, 105.58705019161188])
+                .bindPopup(
+                    "<b>tes</b><br>" +
+                        "Petugas: Andre<br><br>" +
+                        "<div class='text-center'>" +
+                        "<a class='btn btn-xs btn-success'" +
+                        "href='<?= base_url('lokasi/detail/' . 1); ?>'><i class='fa fa-search-plus'></i></a>   " +
+                        "<a class='btn btn-xs btn-warning'" +
+                        "href='<?= base_url('lokasi/edit/' . 1); ?>'><i class='fa fa-edit'></i></a>   " +
+                        "<a onclick='return confirm()' class='btn btn-xs btn-danger'" +
+                        "href='<?= base_url('lokasi/delete/' . 1); ?>'><i class='fa fa-trash'></i></a>" +
+                        "</div>"
+                )
+                .addTo(map);
+
+            L.easyPrint({
+                title: "My awesome image button",
+                position: "topleft",
+                exportOnly: true,
+                filename: "JasaRaharja",
+                sizeModes: ["Current", "A4Portrait", "A4Landscape"],
+            }).addTo(map);
+
+            L.easyPrint({
+                title: "My awesome print button",
+                position: "topleft",
+                filename: "JasaRaharja",
+                sizeModes: ["Current", "A4Portrait", "A4Landscape"],
+            }).addTo(map);
+        </script>
+    </body>
+</html>

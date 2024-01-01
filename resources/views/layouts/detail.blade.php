@@ -63,9 +63,17 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset(' assets/leaflet-easyprint/dist/bundle.js') }}"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-fullscreen/dist/leaflet.fullscreen.min.css" />
+    <script src="https://unpkg.com/leaflet-fullscreen/dist/Leaflet.fullscreen.min.js"></script>
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+    <!-- Leaflet Sidebar CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2/css/leaflet-sidebar.css" />
+    <script src="https://unpkg.com/leaflet-sidebar-v2/js/leaflet-sidebar.js"></script>
+
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
@@ -78,7 +86,7 @@
 
     <main id="main">
 
-        <x-navbar />
+        <x-navbar-detail />
 
         @yield('content')
 
@@ -1190,7 +1198,7 @@
             <div class="row gy-4">
                 <div class="col-lg-5 col-md-12 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span>Append</span>
+                        <span>Mata Elang Pembangunan</span>
                     </a>
                     <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita
                         valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
@@ -1271,7 +1279,7 @@
     <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ asset(' assets/vendor/leaflet-easyprint/dist/bundle.js') }}"></script>
+    <script src="{{ asset('assets/vendor/leaflet-easyprint/dist/bundle.js') }}"></script>
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
