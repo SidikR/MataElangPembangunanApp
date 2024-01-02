@@ -21,6 +21,10 @@ Route::get('/detail', function () {
     return view('pages.dinkes.stunting.detailData');
 })->name('detail');
 
+Route::get('/detail/map', function () {
+    return view('pages.dinkes.stunting.detaildataMap');
+})->name('detail/map');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -1,5 +1,6 @@
 <section id="data_detail" class="container data-detail">
 
+
     <div class="container" id="stunting">
 
         <div class="container section-title pilihan rounded-2 fixed-top p-1" data-aos="fade-up">
@@ -176,7 +177,7 @@
 
         </div>
 
-        <div id="map" class="peta"></div>
+        <div id="map" class="peta z-1"></div>
 
         <div class="info-grafis" v-if="isActiveInfoGrafis">
             <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Kecamatan</h2>
@@ -188,6 +189,7 @@
         </div>
 
     </div>
+
     <script>
         const app = Vue.createApp({
             data() {
@@ -303,14 +305,25 @@
                             console.error('Error loading GeoJSON data:', error);
                         });
 
+                    var redIcon = new L.Icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    });
+
                     const markers = this.dataStuntingView.map(location => {
                         const [lat, lng] = location.koordinat.split(',').map(parseFloat);
                         if (!isNaN(lat) && !isNaN(lng)) {
-                            return L.marker([lat, lng])
+                            return L.marker([lat, lng], {
+                                    icon: redIcon
+                                })
                                 .bindPopup(`    <div class = "d-flex flex-column gap-2">
-                                                <img class="bg-success border-1 rounded-2" src="${location.photoUrl}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
+                                                <img class="bg-success border-1 rounded-2 text-center" src="{{ asset('assets/img/profile.png') }}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
                                                 <span>Nama : <b>${location.Name}</b></span>
-                                                <button class="btn btn-success" onclick="handleButtonClick()">Button 1</button>
+                                                <a href="{{ route('detail/map') }}" class="btn btn-danger text-light" onclick="handleButtonClick()"><i class='bi bi-reply-fill'></i></a>
                                             </div>
                                         `)
                                 .addTo(this.map);
