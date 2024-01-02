@@ -55,8 +55,16 @@
 --------------------------------------------------------------*/
 body {
     color: var(--default-color);
-    background-color: var(--background-color);
+    background-color: #EEEEEE;
     font-family: var(--default-font);
+}
+
+html{
+    background-color: #EEEEEE;
+}
+
+.index-page{
+    background-color: #EEEEEE;
 }
 
 a {
@@ -2914,7 +2922,7 @@ section {
     height: fit-content;
     max-height: 300px;
     overflow-y: hidden;
-    background-color: white;
+    /* background-color: white; */
 }
 
 .wrapper-list {
@@ -2938,7 +2946,7 @@ section {
 .data {
     cursor: pointer;
     color: #343A40;
-    background-color: #f4f4f4;
+    background-color: white;
 }
 
 .judul-data{

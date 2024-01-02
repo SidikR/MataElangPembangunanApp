@@ -1,5 +1,5 @@
 <!-- Services Section - Home Page -->
-<section id="list_op" class="services" v-if="!selectedOPDCard && !selectedDataCard">
+<section id="list_op" class="services" v-if="!selectedOPDCard && !selectedDataCard" style="background-color: #EEEEEE">
 
     <!--  Section Title -->
     <div class="container section-title" data-aos="fade-up">
