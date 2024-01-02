@@ -14,7 +14,6 @@
                 <li><a href="index.html#hero" class="active">Home</a></li>
                 <li><a href="index.html#about">Dataset</a></li>
                 <li><a href="index.html#services">Infografis</a></li>
-                <li><a href="index.html#portfolio">Visualisasi</a></li>
                 {{-- <li><a href="index.html#team">Team</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li class="dropdown has-dropdown"><a href="#"><span>Dropdown</span> <i
@@ -41,8 +40,6 @@
 
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav><!-- End Nav Menu -->
-
-        <a class="btn-getstarted" href="index.html#about">Get Started</a>
 
     </div>
 </header><!-- End Header -->

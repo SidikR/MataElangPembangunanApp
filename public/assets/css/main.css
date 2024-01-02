@@ -2914,7 +2914,7 @@ section {
     height: fit-content;
     max-height: 300px;
     overflow-y: hidden;
-    background-color: var(--background-color);
+    background-color: white;
 }
 
 .wrapper-list {
@@ -2937,7 +2937,22 @@ section {
 
 .data {
     cursor: pointer;
-    background-color: var(--primary-color);
+    color: #343A40;
+    background-color: #f4f4f4;
+}
+
+.judul-data{
+    color: var(--primary-color);
+}
+
+.detail-button-data{
+    border-radius: 60px 0px 60px 60px;
+    border: 1px solid #6C757D;
+    background: #9E1919;
+    width: fit-content;
+    align-self: flex-end;
+    padding: 5px 10px;
+    color: white;
 }
 
 .pilihan {
