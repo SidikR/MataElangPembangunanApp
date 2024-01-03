@@ -2949,6 +2949,10 @@ section {
     background-color: white;
 }
 
+.container-data-detail{
+    background-color: #eeeeee;
+}
+
 .judul-data{
     color: var(--primary-color);
 }
@@ -2964,7 +2968,7 @@ section {
 }
 
 .pilihan {
-    margin-top: 87px;
+    margin-top: 95px;
 }
 
 .parent-container {
@@ -2977,18 +2981,22 @@ section {
     display: flex;
     justify-content: space-around; /* Adjust as needed */
     align-items: center; /* Adjust as needed */
-    border: 2px solid var(--primary-color);
+    /* border: 2px solid var(--primary-color); */
     cursor: pointer;
     background-color: white;
 }
 
 .box-custome{
-    background-color: #f4f4f4;
+    background-color: white;
+    padding-top: 20px;
+    padding: 20px;
+    margin-bottom: 10px;
 }
 
 .headerdetail{
     border-radius: 0px 0px 20px 20px;
     background: linear-gradient(90deg, #9E1919 0%, #244769 100%);   
+    width: auto;
 }
 
 .headerfoto img{
@@ -3012,7 +3020,10 @@ section {
 }
 
 .data-detail{
-    margin-top: 95px;
+    margin-top: 98px;
+    padding-top: 0px;
+    padding: 0px;
+
 }
 
 .header-detail{
