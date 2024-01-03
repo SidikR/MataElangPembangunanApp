@@ -1,9 +1,8 @@
-<section id="data_detail" class="container data-detail">
-
+<section id="data_detail" class="container-data-detail mb-3">
 
     <div class="container" id="stunting">
 
-        <div class="container section-title pilihan rounded-2 fixed-top p-1" data-aos="fade-up">
+        <div class="container section-title pilihan rounded-2 fixed-top" data-aos="fade-up">
             <div class="d-flex box-pilihan rounded-2">
                 <div class="ringkasan item box-item cursor-pointer rounded-2 py-2" :class="{ active: isActiveRingkasan }"
                     @click="activeRingkasan">
@@ -17,174 +16,194 @@
                     :class="{ active: isActiveInfoGrafis }" @click="activeInfoGrafis">
                     Info Grafis
                 </div>
+                <div class="infografi item box-item cursor-pointer rounded-2 py-2" :class="{ active: isActiveMaps }"
+                    @click="activeMaps">
+                    Maps
+                </div>
             </div>
         </div>
 
-        <div class="headerdetail mb-3 p-4 mt-0">
-            <div class="d-flex align-items-center">
-                <div class="headerfoto png">
-                    <img src={{ asset('assets/img/dataset.png') }} alt="">
-                </div>
-                <div class="d-flex flex-column">
-                    <span class="p-1 rounded-3 bg-success text-white" style="max-width: 150px">Dinas Kesehatan</span>
-                    <h1 class="text-white"><strong>Sebaran Data Stunting di Kabupaten Lampung Selatan</strong></h1>
-                </div>
 
+        <div class="container data-detail mx-0">
+
+            <div class="headerdetail mb-3 p-4 mt-0 mx-0">
+                <div class="d-flex align-items-center">
+                    <div class="headerfoto png">
+                        <img src={{ asset('assets/img/dataset.png') }} alt="">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="p-1 rounded-3 bg-success text-white" style="max-width: 150px">Dinas
+                            Kesehatan</span>
+                        <h1 class="text-white"><strong>Sebaran Data Stunting di Kabupaten Lampung Selatan</strong>
+                        </h1>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
-        <div class="box-custome rounded-3 container p-3 px-5 mb-5" v-if="!isActiveRingkasan">
-            <form action="" id="form">
-                <div class="row">
-                    <h4 class="mb-3 mt-3">Filter</h4>
-                    <div class="">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 20px">
-                            <div class="mb-3 col-5 mx-2">
-                                <label for="filter-kecamatan" class="form-label">Filter by Kecamatan</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
-                                            </path>
-                                            <path
-                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <select name="filter-kecamatan" id="filter-kecamatan" class="form-control"
-                                        @change="handleFilterKecamatan">
-                                        <option value="" selected>--Pilih Kecamatan--</option>
-                                        <option v-for="kecamatan in kecamatanData" :key="kecamatan.id"
-                                            :value="kecamatan.id">
-                                            @{{ kecamatan.name }}
-                                        </option>
-                                    </select>
+            <div class="box-custome rounded-3 container " v-if="!isActiveRingkasan">
+                <form action="" id="form">
+                    <div class="row">
+                        <h4 class="mb-3 mt-3">Filter</h4>
+                        <div class="">
+                            <div class="d-flex justify-content-between" style="margin-bottom: 20px">
+                                <div class="mb-3 col-5 mx-2">
+                                    <label for="filter-kecamatan" class="form-label">Filter by Kecamatan</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                                                </path>
+                                                <path
+                                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <select name="filter-kecamatan" id="filter-kecamatan" class="form-control"
+                                            @change="handleFilterKecamatan">
+                                            <option value="" selected>--Pilih Kecamatan--</option>
+                                            <option v-for="kecamatan in kecamatanData" :key="kecamatan.id"
+                                                :value="kecamatan.id">
+                                                @{{ kecamatan.name }}
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3 col-5 mx-2">
-                                <label for="filter-desa" class="form-label">Filter by Desa</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
-                                            </path>
-                                            <path
-                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <select name="filter-desa" id="filter-desa" class="form-control"
-                                        @change="handleFilterDesa">
-                                        <option value="" selected>--Pilih Desa--</option>
-                                        <option v-for="desa in dataDesa" :key="desa.id" :value="desa.id">
-                                            @{{ desa.name }}
-                                        </option>
-                                    </select>
+                                <div class="mb-3 col-5 mx-2">
+                                    <label for="filter-desa" class="form-label">Filter by Desa</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                                                </path>
+                                                <path
+                                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <select name="filter-desa" id="filter-desa" class="form-control"
+                                            @change="handleFilterDesa">
+                                            <option value="" selected>--Pilih Desa--</option>
+                                            <option v-for="desa in dataDesa" :key="desa.id"
+                                                :value="desa.id">
+                                                @{{ desa.name }}
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="d-grid mt-0 d-md-flex justify-content-md-end">
+                            <button type="reset" @click="buttonReset" class="btn btn-danger reset">Reset
+                                Filter</button>
+                        </div>
                     </div>
-                    <div class="d-grid mt-0 d-md-flex justify-content-md-end">
-                        <button type="reset" @click="buttonReset" class="btn btn-danger reset">Reset
-                            Filter</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
 
 
-        <div class="row mt-4" v-if="isActiveDataSet">
-            <table id="stuntingTable" class="table table-striped mb-5" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Kecamatan</th>
-                        <th>Desa</th>
-                        {{-- <th>Status</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(data, index) in dataStuntingView" :key="index">
-                        <td>@{{ index + 1 }}</td>
-                        <td>@{{ data.Name }}</td>
-                        <td>@{{ handleKecamatan(data.Kecamatan) }}</td>
-                        <td>@{{ data.Desa }}</td>
-                        {{-- <td>@{{ data.Status }}</td> --}}
-                    </tr>
-                </tbody>
-            </table>
-            <div class="box-custome rounded-3 container p-3 px-5 mb-5 mt-5">
-                <h4 class="mt-4">Jumlah Stunting di Kecamatan</h4>
-                <table id="" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Kecamatan</th>
-                            <th>Jumlah Stunting</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-if="selectedKecamatan !== ''">
-                            <td>@{{ handleKecamatan(selectedKecamatan) }}</td>
-                            <td>@{{ kecamatanSelectedSummary[selectedKecamatan] || 0 }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 class="my-1 mt-4">Data Stunting per Desa</h4>
-                <div style="overflow-x: auto;">
-                    <table id="stuntingByDesa" class="table table-striped" style="width:100%">
+            <div class="" v-if="isActiveDataSet">
+                <div class="mt-3 box-custome container rounded-3 ">
+                    <table id="stuntingTable" class="table table-striped mb-5" style="width:100%">
                         <thead>
                             <tr>
-                                <th v-for="desa in dataDesa" :key="desa.id">@{{ desa.name }}</th>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Kecamatan</th>
+                                <th>Desa</th>
+                                {{-- <th>Status</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-
-                                <td v-for="desa in dataDesa" :key="desa.id">@{{ desaSummary[desa.id] || 0 }}</td>
+                            <tr v-for="(data, index) in dataStuntingView" :key="index">
+                                <td>@{{ index + 1 }}</td>
+                                <td>@{{ data.Name }}</td>
+                                <td>@{{ handleKecamatan(data.Kecamatan) }}</td>
+                                <td>@{{ data.Desa }}</td>
+                                {{-- <td>@{{ data.Status }}</td> --}}
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <div class="mt-3 box-custome container rounded-3">
+                    <h4 class="mt-4">Jumlah Stunting di Kecamatan</h4>
+                    <table id="" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Kecamatan</th>
+                                <th>Jumlah Stunting</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="selectedKecamatan !== ''">
+                                <td>@{{ handleKecamatan(selectedKecamatan) }}</td>
+                                <td>@{{ kecamatanSelectedSummary[selectedKecamatan] || 0 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="my-1 mt-4">Data Stunting per Desa</h4>
+                    <div style="overflow-x: auto;">
+                        <table id="stuntingByDesa" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Desa</th>
+                                    <th>Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(desa, index) in dataDesa" :key="index">
+                                    <td>@{{ index + 1 }}</td>
+                                    <td>@{{ desa.name }}</td>
+                                    <td>@{{ desaSummary[desa.id] || 0 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
+            <div class="box-custome rounded-3 container tabel-ringkasan-syunting-kecamatan" v-if="isActiveRingkasan">
+                <h4>Data Stunting per Kecamatan</h4>
+                <div style="overflow-x: auto;">
+                    <table id="stuntingByKecamatan" class="table table-striped mb-5" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kecamatan</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(kecamatan, index) in kecamatanData" :key="index">
+                                <td>@{{ index + 1 }}</td>
+                                <td>@{{ kecamatan.name }}</td>
+                                <td>@{{ kecamatanSummary[kecamatan.id] || 0 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        </div>
-
-        <div class="tabel-ringkasan-syunting-kecamatan" v-if="isActiveRingkasan">
-            <h4>Data Stunting per Kecamatan</h4>
-            <div style="overflow-x: auto;">
-                <table id="stuntingByKecamatan" class="table table-striped">
-                    <thead>
-                        <tr>
-                            {{-- <th>Data Stunting Count</th> --}}
-                            <th v-for="kecamatan in kecamatanData" :key="kecamatan.id">@{{ kecamatan.name }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {{-- <td>Total</td> --}}
-                            <td v-for="kecamatan in kecamatanData" :key="kecamatan.id">@{{ kecamatanSummary[kecamatan.id] || 0 }}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
-        </div>
+            <div class="maps box-custome rounded-3 container" v-if="isActiveMaps">
+                <div id="map" class="peta z-1"></div>
+            </div>
 
-        <div id="map" class="peta z-1"></div>
+            <div class="info-grafis box-custome rounded-3 container" v-if="isActiveInfoGrafis">
+                <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Kecamatan</h2>
+                <canvas ref="kecamatanChartCanvas" id="kecamatanChart" width="300" height="100"
+                    class="mb-5"></canvas>
+                <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Desa</h2>
+                <canvas class="" ref="desaChartCanvas" id="desaChart" width="300" height="100"></canvas>
 
-        <div class="info-grafis" v-if="isActiveInfoGrafis">
-            <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Kecamatan</h2>
-            <canvas ref="kecamatanChartCanvas" id="kecamatanChart" width="300" height="100"
-                class="mb-5"></canvas>
-            <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Desa</h2>
-            <canvas class="" ref="desaChartCanvas" id="desaChart" width="300" height="100"></canvas>
+            </div>
 
         </div>
 
@@ -204,6 +223,7 @@
                     isActiveRingkasan: true,
                     isActiveDataSet: false,
                     isActiveInfoGrafis: false,
+                    isActiveMaps: false,
                     map: null,
                 };
             },
@@ -218,6 +238,7 @@
             updated() {
                 this.createKecamatanChart();
                 this.createDesaChart();
+                this.handleMaps();
             },
 
             computed: {
@@ -256,7 +277,7 @@
             },
 
             watch: {
-                dataStuntingView: {
+                dataStunting: {
                     deep: true, // Membuat pemantauan menjadi rekursif untuk objek bersarang
                     handler: 'handleMaps', // Panggil handleMaps ketika dataStuntingView berubah
                 },
@@ -271,68 +292,70 @@
                 },
 
                 handleMaps() {
-                    const baseLayers = {
-                        'Map 1': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        }),
-                    };
+                    if (this.isActiveMaps) {
+                        const baseLayers = {
+                            'Map 1': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }),
+                        };
 
-                    var peta3 = baseLayers['Map 1'];
+                        var peta3 = baseLayers['Map 1'];
 
-                    // Hapus peta sebelumnya jika ada
-                    if (this.map) {
-                        this.map.remove();
-                    }
+                        // Hapus peta sebelumnya jika ada
+                        if (this.map) {
+                            this.map.remove();
+                        }
 
-                    this.map = L.map('map', {
-                        center: [-5.7127694975182495, 105.58705019161188],
-                        zoom: 10,
-                        layers: [baseLayers['Map 1']],
-                    });
-
-                    // L.control.layers(baseLayers).addTo(this.map);
-
-                    this.map.addControl(new L.Control.Fullscreen());
-
-
-                    const geoJSONUrl = '{{ asset('assets/geo-location/lampung-selatan.geojson') }}';
-                    fetch(geoJSONUrl)
-                        .then(response => response.json())
-                        .then(geoJSONData => {
-                            L.geoJSON(geoJSONData).addTo(this.map);
-                        })
-                        .catch(error => {
-                            console.error('Error loading GeoJSON data:', error);
+                        this.map = L.map('map', {
+                            center: [-5.7127694975182495, 105.58705019161188],
+                            zoom: 10,
+                            layers: [baseLayers['Map 1']],
                         });
 
-                    var redIcon = new L.Icon({
-                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34],
-                        shadowSize: [41, 41]
-                    });
+                        // L.control.layers(baseLayers).addTo(this.map);
 
-                    const markers = this.dataStuntingView.map(location => {
-                        const [lat, lng] = location.koordinat.split(',').map(parseFloat);
-                        if (!isNaN(lat) && !isNaN(lng)) {
-                            return L.marker([lat, lng], {
-                                    icon: redIcon
-                                })
-                                .bindPopup(`    <div class = "d-flex flex-column gap-2">
+                        this.map.addControl(new L.Control.Fullscreen());
+
+
+                        const geoJSONUrl = '{{ asset('assets/geo-location/lampung-selatan.geojson') }}';
+                        fetch(geoJSONUrl)
+                            .then(response => response.json())
+                            .then(geoJSONData => {
+                                L.geoJSON(geoJSONData).addTo(this.map);
+                            })
+                            .catch(error => {
+                                console.error('Error loading GeoJSON data:', error);
+                            });
+
+                        var redIcon = new L.Icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
+
+                        const markers = this.dataStuntingView.map(location => {
+                            const [lat, lng] = location.koordinat.split(',').map(parseFloat);
+                            if (!isNaN(lat) && !isNaN(lng)) {
+                                return L.marker([lat, lng], {
+                                        icon: redIcon
+                                    })
+                                    .bindPopup(`    <div class = "d-flex flex-column gap-2">
                                                 <img class="bg-success border-1 rounded-2 text-center" src="{{ asset('assets/img/profile.png') }}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
                                                 <span>Nama : <b>${location.Name}</b></span>
                                                 <a href="{{ route('detail/map') }}" class="btn btn-danger text-light" onclick="handleButtonClick()"><i class='bi bi-reply-fill'></i></a>
                                             </div>
                                         `)
-                                .addTo(this.map);
-                        } else {
-                            console.error(`Invalid coordinates for ${location.Name}`);
-                            return null;
-                        }
-                    });
+                                    .addTo(this.map);
+                            } else {
+                                console.error(`Invalid coordinates for ${location.Name}`);
+                                return null;
+                            }
+                        });
 
+                    }
                 },
 
                 async fetchKecamatanData() {
@@ -340,8 +363,8 @@
                         const response = await axios.get(
                             'https://api.binderbyte.com/wilayah/kecamatan?api_key=26dc325e8104c47591ce093a2c050b92689a871f9b71c2ab496968f487343111&id_kabupaten=18.01'
                         );
-
                         this.kecamatanData = response.data.value;
+                        this.updateDataTable();
                     } catch (error) {
                         console.error('Error fetching kecamatan data:', error);
                     }
@@ -354,7 +377,7 @@
                             `https://api.binderbyte.com/wilayah/kelurahan?api_key=26dc325e8104c47591ce093a2c050b92689a871f9b71c2ab496968f487343111&id_kecamatan=${idKecamatan}`
                         );
                         this.dataDesa = response.data.value;
-                        console.log(this.dataDesa);
+                        this.updateDataTable();
                     } catch (error) {
                         console.error('Error fetching data desa:', error);
                     }
@@ -395,9 +418,17 @@
 
                 updateDataTable() {
                     const stuntingTable = $('#stuntingTable').DataTable();
+                    const stuntingByKecamatan = $('#stuntingByKecamatan').DataTable();
+                    const stuntingByDesa = $('#stuntingByDesa').DataTable();
 
                     if (stuntingTable) {
                         stuntingTable.destroy();
+                    }
+                    if (stuntingByKecamatan) {
+                        stuntingByKecamatan.destroy();
+                    }
+                    if (stuntingByDesa) {
+                        stuntingByDesa.destroy();
                     }
 
                     this.$nextTick(() => {
@@ -407,6 +438,27 @@
                             lengthMenu: [
                                 [10, 25, 50, -1],
                                 [10, 25, 50, 'All'],
+                            ],
+                            scrollX: true,
+                        });
+
+                        $('#stuntingByKecamatan').DataTable({
+                            colReorder: true,
+                            responsive: true,
+                            lengthMenu: [
+                                [5, 10, 20, 50, -1],
+                                [5, 10, 20, 50, 'All'],
+                            ],
+                            scrollX: true,
+                        });
+                        this.startChart();
+
+                        $('#stuntingByDesa').DataTable({
+                            colReorder: true,
+                            responsive: true,
+                            lengthMenu: [
+                                [5, 10, 20, 50, -1],
+                                [5, 10, 20, 50, 'All'],
                             ],
                             scrollX: true,
                         });
@@ -501,6 +553,7 @@
                     this.isActiveRingkasan = true;
                     this.isActiveDataSet = false;
                     this.isActiveInfoGrafis = false;
+                    this.isActiveMaps = false;
                     this.updateDataTable();
                 },
 
@@ -508,6 +561,7 @@
                     this.isActiveRingkasan = false;
                     this.isActiveDataSet = true;
                     this.isActiveInfoGrafis = false;
+                    this.isActiveMaps = false;
                     this.updateDataTable();
                 },
 
@@ -515,6 +569,15 @@
                     this.isActiveRingkasan = false;
                     this.isActiveDataSet = false;
                     this.isActiveInfoGrafis = true;
+                    this.isActiveMaps = false;
+                    this.updateDataTable();
+                },
+
+                activeMaps() {
+                    this.isActiveRingkasan = false;
+                    this.isActiveDataSet = false;
+                    this.isActiveInfoGrafis = false;
+                    this.isActiveMaps = true;
                     this.updateDataTable();
                 },
             }
