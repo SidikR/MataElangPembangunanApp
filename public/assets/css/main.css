@@ -2912,7 +2912,7 @@ section {
 
 .list-kategori {
     height: fit-content;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: hidden;
     background-color: var(--primary-color);
     color: var(--background-color);
@@ -2933,7 +2933,7 @@ section {
 }
 
 .list-kategori ul {
-    transition: transform 1s ease-in-out;
+    transition: all 0.01s ease-in;
 }
 
 .list-kategori ul:hover {
