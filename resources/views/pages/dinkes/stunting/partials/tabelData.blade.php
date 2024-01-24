@@ -2,7 +2,7 @@
 
     <div class="container" id="stunting">
 
-        <div class="container section-title pilihan rounded-2 fixed-top" data-aos="fade-up">
+        <div class="container section-title pilihan rounded-2 fixed-top">
             <div class="d-flex box-pilihan rounded-2">
                 <div class="ringkasan item box-item cursor-pointer rounded-2 py-2" :class="{ active: isActiveRingkasan }"
                     @click="activeRingkasan">
@@ -108,6 +108,7 @@
 
             <div class="" v-if="isActiveDataSet">
                 <div class="mt-3 box-custome container rounded-3 ">
+                    <h4 class="mb-4 mt-2">Dataset Stunting</h4>
                     <table id="stuntingTable" class="table table-striped mb-5" style="width:100%">
                         <thead>
                             <tr>
@@ -123,7 +124,6 @@
                                 <td>@{{ data.name }}</td>
                                 <td>@{{ handleNameKecamatan(data.kecamatan) }}</td>
                                 <td>@{{ handleNameDesa(data.desa) }}</td>
-                                {{-- <td>@{{ data.Status }}</td> --}}
                             </tr>
                         </tbody>
                     </table>
@@ -146,7 +146,9 @@
                         </tbody>
                     </table>
 
-                    <h4 class="my-1 mt-4">Data Stunting per Desa</h4>
+                    <hr>
+
+                    <h4 class="my-1 mt-4 mb-4">Data Stunting per Desa</h4>
                     <div style="overflow-x: auto;">
                         <table id="stuntingByDesa" class="table table-striped" style="width:100%">
                             <thead>
@@ -168,8 +170,10 @@
                 </div>
             </div>
 
+
+            {{-- Ringkasan section (data per kecamatan ) --}}
             <div class="box-custome rounded-3 container tabel-ringkasan-syunting-kecamatan" v-if="isActiveRingkasan">
-                <h4>Data Stunting per Kecamatan</h4>
+                <h4>Data Stunting Setiap Kecamatan</h4>
                 <div style="overflow-x: auto;">
                     <table id="stuntingByKecamatan" class="table table-striped mb-5" style="width:100%">
                         <thead>
@@ -188,20 +192,22 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
 
+
+            {{-- Maps --}}
             <div class="maps box-custome rounded-3 container" v-if="isActiveMaps">
                 <div id="map" class="peta z-1"></div>
             </div>
 
+
+            {{-- Info Grafik --}}
             <div class="info-grafis box-custome rounded-3 container" v-if="isActiveInfoGrafis">
                 <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Kecamatan</h2>
                 <canvas ref="kecamatanChartCanvas" id="kecamatanChart" width="300" height="100"
                     class="mb-5"></canvas>
                 <h2 class="text-center">Grafik Sebaran Data Stunting Setiap Desa</h2>
                 <canvas class="" ref="desaChartCanvas" id="desaChart" width="300" height="100"></canvas>
-
             </div>
 
         </div>
@@ -351,13 +357,13 @@
                                     })
                                     .bindPopup(`    <div class = "d-flex flex-column gap-2">
                                                 <img class="bg-success border-1 rounded-2 text-center" src="{{ asset('assets/img/profile.png') }}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
-                                                <span>Nama : <b>${location.Name}</b></span>
+                                                <span>Nama : <b>${location.name}</b></span>
                                                 <a href="{{ route('detail/map') }}" class="btn btn-danger text-light" onclick="handleButtonClick()"><i class='bi bi-reply-fill'></i></a>
                                             </div>
                                         `)
                                     .addTo(this.map);
                             } else {
-                                console.error(`Invalid coordinates for ${location.Name}`);
+                                console.error(`Invalid coordinates for ${location.name}`);
                                 return null;
                             }
                         });
@@ -406,6 +412,7 @@
                         const response = await axios.get(`${this.apiBaseUrl}/stunting`);
                         this.dataStunting = response.data.data;
                         this.dataStuntingView = this.dataStunting;
+                        console.log(this.dataStuntingView);
                         this.updateDataTable();
                         this.handleMaps();
                     } catch (error) {
