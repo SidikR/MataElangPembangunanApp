@@ -121,7 +121,7 @@
                         <tbody>
                             <tr v-for="(data, index) in dataStuntingView" :key="index">
                                 <td>@{{ index + 1 }}</td>
-                                <td>@{{ data.name }}</td>
+                                <td>@{{ data.nama }}</td>
                                 <td>@{{ handleNameKecamatan(data.kecamatan) }}</td>
                                 <td>@{{ handleNameDesa(data.desa) }}</td>
                             </tr>
@@ -217,7 +217,7 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    apiBaseUrl: 'http://localhost:8000/api',
+                    apiBaseUrl: "{{ env('API_BE_SIMS') }}",
                     dataStunting: [],
                     dataStuntingView: [],
                     kecamatanData: [],
@@ -349,18 +349,21 @@
                             shadowSize: [41, 41]
                         });
 
-                        const markers = this.dataStuntingView.map(location => {
+                        const markers = this.dataStuntingView.map((location, index) => {
                             const [lat, lng] = location.koordinat.split(',').map(parseFloat);
                             if (!isNaN(lat) && !isNaN(lng)) {
                                 return L.marker([lat, lng], {
                                         icon: redIcon
                                     })
-                                    .bindPopup(`    <div class = "d-flex flex-column gap-2">
-                                                <img class="bg-success border-1 rounded-2 text-center" src="{{ asset('assets/img/profile.png') }}" alt="Photo" style="max-width: 200px; width:100px;height:100px; max-height: 200px;">
-                                                <span>Nama : <b>${location.name}</b></span>
-                                                <a href="{{ route('detail/map') }}" class="btn btn-danger text-light" onclick="handleButtonClick()"><i class='bi bi-reply-fill'></i></a>
+                                    .bindPopup(`<div class="d-flex flex-column justify-content-center align-items-center gap-2">
+                                                <img class="bg-success border-1 rounded-2 text-center" src="http://127.0.0.1:8000/storage/${location.path}/${location.nama_file}" alt="Photo" style="max-width: 200px; width:100px; height:100px; max-height: 200px;">
+                                                <span>Nama : <b>${location.nama}</b></span>
+                                                <a class="btn btn-danger text-light" onclick="window.location.href='/detail/map/${location.ulid}'">
+                                                <i class='bi bi-reply-fill'></i> Lihat Detail
+                                            </a>
+
                                             </div>
-                                        `)
+                                            `)
                                     .addTo(this.map);
                             } else {
                                 console.error(`Invalid coordinates for ${location.name}`);
@@ -381,6 +384,8 @@
                         console.error('Error fetching kecamatan data:', error);
                     }
                 },
+
+
 
                 async fetchDataDesa() {
                     try {
