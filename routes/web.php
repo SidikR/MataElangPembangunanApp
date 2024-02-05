@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\KecamatanController;
 use App\Http\Controllers\Admin\InstansiController;
 use App\Http\Controllers\Admin\DesaController;
+use App\Http\Controllers\StuntingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,7 @@ Route::get('/detail', function () {
     return view('pages.dinkes.stunting.detailData');
 })->name('detail');
 
-Route::get('/detail/map', function () {
-    return view('pages.dinkes.stunting.detaildataMap');
-})->name('detail/map');
+Route::get('/detail/map/{ulid}', [StuntingController::class, 'getDetail'])->name('detail/map');
 
 
 
