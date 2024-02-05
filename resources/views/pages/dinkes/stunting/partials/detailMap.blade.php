@@ -1,5 +1,4 @@
-<section id="detail_map" class="container data-detail">
-
+<section id="detail_map" class="container data-detail p-4">
 
     <div class="container" id="detail_map">
         <div class="row">
@@ -12,24 +11,29 @@
                     <tr>
                         <th>Foto</th>
                         <th>:</th>
-                        <td><img src="{{ asset('assets/img/profile.png') }}" alt="profile" class="img-thumbnail"
-                                width="150"></td>
+                        <td>
+                            <a href="{{ env('URL_STORAGE_SIMS') . '/' . $dataArray['data']['path'] . '/' . $dataArray['data']['nama_file'] }}"
+                                target="_blank">
+                                <img src="{{ env('URL_STORAGE_SIMS') . '/' . $dataArray['data']['path'] . '/' . $dataArray['data']['nama_file'] }}"
+                                    alt="profile" class="img-thumbnail" width="150">
+                            </a>
+                        </td>
                     </tr>
 
                     <tr>
                         <th>Nama Anak</th>
                         <th>:</th>
-                        <td>Hery</td>
+                        <td>{{ $dataArray['data']['nama'] }}</td>
                     </tr>
                     <tr>
                         <th>Alamat</th>
                         <th>:</th>
-                        <td>Kalianda</td>
+                        <td id="alamat">{{ $dataArray['data']['alamat'] }}</td>
                     </tr>
                     <tr>
                         <th>Informasi</th>
                         <th>:</th>
-                        <td>Sudah ditangani</td>
+                        <td>{{ $dataArray['data']['status_penanganan'] }}</td>
                     </tr>
                     <tr>
                         <th>Instansi</th>
@@ -39,20 +43,13 @@
                     <tr>
                         <th>Petugas</th>
                         <th>:</th>
-                        <td>Budianto</td>
+                        <td>{{ $dataArray['data']['nama_pendamping'] }}</td>
                     </tr>
                     <tr>
-                        <th>Latitude</th>
+                        <th>Koordinat</th>
                         <th>:</th>
-                        <td>-5.416888540509599</td>
+                        <td>{{ $dataArray['data']['koordinat'] }}</td>
                     </tr>
-                    <tr>
-                        <th>Longitude</th>
-                        <th>:</th>
-                        <td>105.25394300867542</td>
-                    </tr>
-
-
 
                 </table>
 
@@ -64,48 +61,46 @@
         <br><br>
 
         <script>
-            var peta1 = L.tileLayer(
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    id: 'mapbox/streets-v11'
-                });
+            document.addEventListener('DOMContentLoaded', async function() {
+                const kecamatanId = "{{ $dataArray['data']['kecamatan'] }}";
+                const desaId = "{{ $dataArray['data']['desa'] }}";
+                const alamat = "{{ $dataArray['data']['alamat'] }}";
+                const kecamatanName = await handleNameKecamatan(kecamatanId);
+                const desaName = await handleNameDesa(kecamatanId, desaId);
+                document.getElementById('alamat').innerText =
+                    `Desa ${desaName}, Kecamatan ${kecamatanName}, ${alamat}`;
+            });
 
-            var peta2 = L.tileLayer(
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    id: 'mapbox/satellite-v9'
-                });
+            async function handleNameDesa(id, idDesa) {
+                const response = await axios.get(`/api/data-desa-by-kecamatan?id_kecamatan=${id}`);
+                const dataDesa = response.data.data;
+                const desa = dataDesa.find((item) => item.id_desa === idDesa);
+                console.log("Data Desa", desa)
+                return desa ? desa.name : 'Unknown Desa';
+            }
 
+            async function handleNameKecamatan(id) {
+                const response = await axios.get(`/api/data-kecamatan`);
+                const dataKecamatan = response.data.data;
+                const kecamatan = dataKecamatan.find((item) => item.id_kecamatan === id);
+                console.log("Data Kecamatans", kecamatan);
+                return kecamatan ? kecamatan.name : 'Unknown Kecamatan';
+            }
 
-            var peta3 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            var koordinat = "{{ $dataArray['data']['koordinat'] }}".split(',');
+            var latitude = parseFloat(koordinat[0]);
+            var longitude = parseFloat(koordinat[1]);
+
+            var peta = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             });
 
-            var peta4 = L.tileLayer(
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    id: 'mapbox/dark-v10'
-                });
-
             var map = L.map('map', {
-                center: [-5.416888540509599, 105.25394300867542],
+                center: [latitude, longitude],
                 zoom: 14,
-                layers: [peta3]
+                layers: [peta]
             });
 
-            var baseLayers = {
-                'Default': peta1,
-                'Satelite': peta2,
-                'Street': peta3,
-                'Dark': peta4,
-
-            };
             this.map.addControl(new L.Control.Fullscreen());
 
             var redIcon = new L.Icon({
@@ -117,12 +112,12 @@
                 shadowSize: [41, 41]
             });
 
-            L.marker([-5.416888540509599, 105.25394300867542], {
+            L.marker([latitude, longitude], {
                 icon: redIcon
             }).addTo(map).bindPopup(
-                "Anak: <b>Hery</b><br>" +
-                "Petugas: Budianto<br>" +
-                `<a href="https://www.google.com/maps?q=-5.416888540509599,105.25394300867542" style="width: 100%;" class="btn btn-danger btn-sm text-light mt-1" onclick="handleButtonClick()" target="_blank"><i class='bi bi-map-fill'></i></a>`
+                "Anak: <b>{{ $dataArray['data']['nama'] }}</b><br>" +
+                "Petugas: {{ $dataArray['data']['nama_pendamping'] }}<br>" +
+                `<a href="https://www.google.com/maps?q=${latitude},${longitude}" style="width: 100%;" class="btn btn-danger btn-sm text-light mt-1" onclick="handleButtonClick()" target="_blank"><i class='bi bi-map-fill'></i></a>`
             ).openPopup();
         </script>
 
