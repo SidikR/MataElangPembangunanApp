@@ -1,4 +1,4 @@
-<section id="opd_detail" class="services" v-if="selectedOPDCard && !selectedDataCard">
+<section id="opd_detail" class="services" v-if="selectedOPDCard && !selectedDataCard" style="background-color: #EEEEEE">
 
     <div class="container section-title" data-aos="fade-up">
         <h2>@{{ selectedOPD.nama }}</h2>
@@ -50,25 +50,37 @@
                     <input type="text" class="form-control" placeholder="Cari data terkait...">
                 </div>
                 <div class="ketegoridata-tabel p-3 rounded-2 mb-2">
-                    <div class="d-flex justify-content-between">
-                        <span>Judul</span>
-                        <span>Sifat & Frekuensi</span>
-                        <span>Kategori Sektoral</span>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-5">
+                            <span>Judul</span>
+                        </div>
+                        <div class="col-4">
+                            <span>Sifat & Frekuensi</span>
+                        </div>
+                        <div class="col-3">
+                            <span>Kategori Sektoral</span>
+                        </div>
                     </div>
                 </div>
-                <div class="list-kategori-data rounded-3 h-5">
-                    <div class="wrapper-list">
-                        <div class="data my-2 p-3 rounded-3 text-white">
+                <div class="list-kategori-data rounded-3 h-5" style="overflow-y: auto">
+                    <div class="wrapper-list-data">
+                        <div class="d-flex flex-column data my-2 p-3 rounded-3">
                             <div class="row d-flex">
-                                <div class="col">
+                                <div class="col-5 d-flex gap-1 flex-column">
                                     <a href={{ route('detail') }}>
-                                        <p class="text-white fs-bold mb-0">Sebaran Data Stunting di Kabupaten Lampung
+                                        <p class="judul-data fw-bold mb-0" style="">Sebaran Data Stunting di
+                                            Kabupaten
+                                            Lampung
                                             Selatan</p>
                                     </a>
-                                    <p>Dinas Kesehatan</p>
-                                    <p>Diperbaharui pada 21 Des 2023, 15:09 WIB</p>
+                                    <p class="fs-6 mb-0 pb-0" style="font-size: 1rem"><i class="bi bi-building"></i>
+                                        Dinas Kesehatan</p>
+                                    <p class="fs-6 mt-0 pt-0" style="font-size: 1rem"><i class="bi bi-calendar"></i>
+                                        Diperbaharui pada 21 Des
+                                        2023,
+                                        15:09</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex row flex-column">
                                             <p class="fw-bold mb-0">Sifat Data</p>
@@ -80,10 +92,56 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-3">
                                     <p>Pendidikan, Kesehatan, Sosial, Pemberdayaan Masyarakat Desa, Perpustakaan dan
                                         Kearsipan</p>
                                 </div>
+                            </div>
+                            <hr>
+                            <div class="detail-button-data w-3 d-flex justify-content-end">
+                                <a class="text-white" href={{ route('detail') }}>
+                                    Detail <i class="bi bi-book-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column data my-2 p-3 rounded-3">
+                            <div class="row d-flex">
+                                <div class="col-5 d-flex gap-1 flex-column">
+                                    <a href={{ route('detail') }}>
+                                        <p class="judul-data fw-bold mb-0" style="">Sebaran Data Stunting di
+                                            Kabupaten
+                                            Lampung
+                                            Selatan</p>
+                                    </a>
+                                    <p class="fs-6 mb-0 pb-0" style="font-size: 1rem"><i class="bi bi-building"></i>
+                                        Dinas Kesehatan</p>
+                                    <p class="fs-6 mt-0 pt-0" style="font-size: 1rem"><i class="bi bi-calendar"></i>
+                                        Diperbaharui pada 21 Des
+                                        2023,
+                                        15:09</p>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex row flex-column">
+                                            <p class="fw-bold mb-0">Sifat Data</p>
+                                            <p>Data Prioritas</p>
+                                        </div>
+                                        <div class="d-flex row flex-column">
+                                            <p class="fw-bold mb-0">Frekuensi</p>
+                                            <p>Setiap ada Perubahan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <p>Pendidikan, Kesehatan, Sosial, Pemberdayaan Masyarakat Desa, Perpustakaan dan
+                                        Kearsipan</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="detail-button-data w-3 d-flex justify-content-end">
+                                <a class="text-white" href={{ route('detail') }}>
+                                    Detail <i class="bi bi-book-fill"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
